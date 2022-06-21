@@ -139,7 +139,7 @@ def sample_complexity(shifts, methods):
         print("--  SHIFT: " + s)
         for n in n_samples:
             print("- # SAMPLES: " + str(n))
-            settings = getSettings(n_samples=n, n_reps=2, n_iterations=1, shift=s, methods=",".join(methods))
+            settings = getSettings(n_samples=n, shift=s, methods=",".join(methods))
 
             save_results(methods, res, settings, s)
 
@@ -168,7 +168,7 @@ def deviation_training_environments(shifts, methods):
                 env_list = [first_env, first_env + dev, first_env + 2*dev]
                 print("- ENVIRONMENTS: " + str(env_list))
 
-                settings = getSettings(n_reps=2, n_iterations=1, setup_hetero=0,
+                settings = getSettings(setup_hetero=0,
                                        shift=s, methods=",".join(methods), env_list=",".join(map(str, env_list)))
                 save_results(methods, res, settings, s)
 
@@ -201,7 +201,7 @@ def values_training_environments(shifts, methods):
                 env_list = [0.2 + adaptation, 2.0 + adaptation, 5.0 + adaptation]
                 print("- ENVIRONMENTS: " + str(env_list))
 
-                settings = getSettings(n_reps=2, n_iterations=1, setup_hetero=h,
+                settings = getSettings(setup_hetero=h,
                                        shift=s, methods=",".join(methods), env_list=",".join(map(str, env_list)))
 
                 save_results(methods, res, settings, s)
@@ -230,7 +230,7 @@ def y_noise(shifts, methods):
         # Loop over shifts
         for s in shifts:
             print("--  SHIFT: " + s)
-            settings = getSettings(n_reps=2, n_iterations=1, shift=s, methods=",".join(methods), setup_hetero=h)
+            settings = getSettings(shift=s, methods=",".join(methods), setup_hetero=h)
 
             save_results(methods, res, settings, s)
 
@@ -265,7 +265,7 @@ def y_noise(shifts, methods):
 
 
 def getSettings(dim=10, dim_x=0, dim_z=0, n_samples=1000, n_reps=10, skip_reps=0, seed=0, print_vectors=1,
-                n_iterations=100000, lr=0.001, verbose=0, methods="ERM,ICP,IRM", alpha=0.05,
+                n_iterations=10000, lr=0.001, verbose=0, methods="ERM,ICP,IRM", alpha=0.05,
                 env_list=".2,2.,5.", setup_sem="chain", setup_ones=1, setup_hetero=1, setup_scramble=0,
                 setup_confounder_on_x=0, shift="AC"):
     settings = {
